@@ -26,7 +26,6 @@ async function run() {
 
 
         // Create Api >>
-
         //http://localhost:5000/question
         app.post("/question", (req, res) => {
             const question = req?.body
@@ -44,15 +43,13 @@ async function run() {
             res.send(sortingResult)
         })
 
-
         //http://localhost:5000/question/delete/prams
         app.delete("/question/delete/:id", async (req, res) => {
             const id = req?.params?.id;
             const result = await questionsCollection.deleteOne({ "_id": ObjectId(id) });
             if (result.deletedCount === 1) {
+                console.log("hit");
                 res.send("Successfully deleted");
-            } else {
-                res.send("No Deleted");
             }
         })
 
