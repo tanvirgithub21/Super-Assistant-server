@@ -27,8 +27,12 @@ async function run() {
 
         // Create Api >>
 
-
-
+        //http://localhost:5000/question
+        app.post("/question", (req, res) => {
+            const question = req?.body
+            const result = questionsCollection.insertOne(question)
+            res.send(result)
+        })
 
 
 
