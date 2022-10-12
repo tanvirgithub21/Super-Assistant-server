@@ -34,6 +34,15 @@ async function run() {
             res.send(result)
         })
 
+        //http://localhost:5000/question
+        app.get("/question", async (req, res) => {
+            const find = req?.params;
+            const question = questionsCollection.find(find)
+            const result = await question.toArray();
+            const sortingResult = await result.sort((a, b) => (a.question_title > b.question_title) ? 1 : ((b.question_title > a.question_title) ? -1 : 0));
+            res.send(sortingResult)
+        })
+
 
 
 
