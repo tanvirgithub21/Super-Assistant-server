@@ -1,3 +1,4 @@
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -10,7 +11,6 @@ app.use(cors())
 app.use(express.json())
 
 // Mongodb Server 
-const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://super-assistant:admin321@cluster0.x3bqwpe.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
@@ -30,6 +30,7 @@ async function run() {
         //http://localhost:5000/question
         app.post("/question", (req, res) => {
             const question = req?.body
+            console.log(question)
             const result = questionsCollection.insertOne(question)
             res.send(result)
         })
@@ -42,6 +43,22 @@ async function run() {
             const sortingResult = await result.sort((a, b) => (a.question_title > b.question_title) ? 1 : ((b.question_title > a.question_title) ? -1 : 0));
             res.send(sortingResult)
         })
+
+
+        //http://localhost:5000/question/delete/prams
+        app.delete("/question/delete/:id", async (req, res) => {
+            const id = req?.params?.id;
+            const result = await questionsCollection.deleteOne({ "_id": ObjectId(id) });
+            if (result.deletedCount === 1) {
+                res.send("Successfully deleted");
+            } else {
+                res.send("No Deleted");
+            }
+        })
+
+
+
+
 
 
 
