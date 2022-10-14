@@ -23,6 +23,7 @@ async function run() {
         console.log("Connected successfully to server");
 
         const questionsCollection = client.db("questions").collection("question");
+        const userCollection = client.db("users").collection("user");
 
 
         // Create Api >>
@@ -53,6 +54,22 @@ async function run() {
             }
         })
 
+        //http://localhost:5000/userInfo/:email
+        app.put("/userInfo/:email", async (req, res) => {
+            const result = req?.body
+            const email = req?.params?.email;
+            const filter = { email: email };
+            const options = { upsert: true };
+            // create a document that sets the plot of the movie
+            const updateDoc = {
+                $set: {
+                    email: email, result
+                },
+            };
+            const updateResult = await userCollection.updateOne(filter, updateDoc, options);
+            res.send(updateResult)
+        })
+
 
 
 
@@ -76,8 +93,6 @@ async function run() {
     }
 }
 run().catch(console.dir)
-
-
 
 //Root Get api
 app.get('/', (req, res) => {
