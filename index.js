@@ -37,11 +37,21 @@ async function run() {
 
         //http://localhost:5000/question
         app.get("/question", async (req, res) => {
+            let totalPoint = 0
+            let array = []
             const find = req?.params;
             const question = questionsCollection.find(find)
             const result = await question.toArray();
             const sortingResult = await result.sort((a, b) => (a.question_title > b.question_title) ? 1 : ((b.question_title > a.question_title) ? -1 : 0));
-            res.send(sortingResult)
+
+            await sortingResult.map(data => {
+                totalPoint = parseInt(totalPoint) + parseInt(data?.point)
+                let singleData = { ...data, totalPoint }
+                array.push(singleData);
+                console.log("hit", totalPoint);
+            })
+            console.log("hituuu", totalPoint);
+            res.send(array)
         })
 
         //http://localhost:5000/question/delete/prams
