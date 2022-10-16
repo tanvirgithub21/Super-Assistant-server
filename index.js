@@ -71,6 +71,13 @@ async function run() {
             res.send(user)
         })
 
+        //http://localhost:5000/userInfo-all
+        app.get("/userInfo-all", async (req, res) => {
+            const user = userCollection.find({ userType: "teacher", })
+            const result = await user.toArray()
+            res.send(result)
+        })
+
         //http://localhost:5000/userInfo/:email
         app.put("/userInfo/:email", async (req, res) => {
             const result = req?.body
