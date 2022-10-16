@@ -68,12 +68,29 @@ async function run() {
         app.put("/userInfo/:email", async (req, res) => {
             const result = req?.body
             const email = req?.params?.email;
+            const userType = req?.query;
+            console.log(userType);
             const filter = { email: email };
             const options = { upsert: true };
-            // create a document that sets the plot of the movie
             const updateDoc = {
                 $set: {
                     email: email, result
+                },
+            };
+            const updateResult = await userCollection.updateOne(filter, updateDoc, options);
+            res.send(updateResult)
+        })
+
+        //http://localhost:5000/userInfo/:email
+        app.put("/login/:email", async (req, res) => {
+            const userType = req?.body
+            const email = req?.params?.email;
+            console.log(userType);
+            const filter = { email: email };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    email: email, userType: userType?.userType
                 },
             };
             const updateResult = await userCollection.updateOne(filter, updateDoc, options);
