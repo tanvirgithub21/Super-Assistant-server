@@ -71,12 +71,12 @@ async function run() {
             res.send(user)
         })
 
-        // //http://localhost:5000/userInfo-all
-        // app.get("/userInfo-all", async (req, res) => {
-        //     const user = userCollection.find({ userType: "teacher", })
-        //     const result = await user.toArray()
-        //     res.send(result)
-        // })
+        //http://localhost:5000/userInfo-all
+        app.get("/userInfo-all", async (req, res) => {
+            const user = userCollection.find({ userType: "teacher", })
+            const result = await user.toArray()
+            res.send(result)
+        })
 
         //http://localhost:5000/userInfo/:email
         app.put("/userInfo/:email", async (req, res) => {
@@ -120,18 +120,9 @@ async function run() {
 }
 
 //Root Get api
-// app.get('/', (req, res) => {
-//     res.send("Super-Assistant Server is Runnin...")
-// })
-
-//http://localhost:5000/userInfo-all
-app.get("/", async (req, res) => {
-    const user = userCollection.find({ userType: "teacher", })
-    const result = await user.toArray()
-    res.send(result)
+app.get('/', (req, res) => {
+    res.send("Super-Assistant Server is Runnin...")
 })
-
-
 
 app.listen(port, () => {
     console.log('listen to port, ', port);
