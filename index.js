@@ -11,7 +11,7 @@ app.use(cors())
 app.use(express.json())
 
 // Mongodb Server 
-const uri = "mongodb+srv://super-assistant:admin321@cluster0.x3bqwpe.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASSWORD}@cluster0.x3bqwpe.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function run() {
@@ -110,21 +110,6 @@ async function run() {
             const updateResult = await userCollection.updateOne(filter, updateDoc, options);
             res.send(updateResult)
         })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
