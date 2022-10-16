@@ -65,6 +65,13 @@ async function run() {
         })
 
         //http://localhost:5000/userInfo/:email
+        app.get("/userInfo/:email", async (req, res) => {
+            const find = req?.params;
+            const user = await userCollection.findOne(find)
+            res.send(user)
+        })
+
+        //http://localhost:5000/userInfo/:email
         app.put("/userInfo/:email", async (req, res) => {
             const result = req?.body
             const email = req?.params?.email;
